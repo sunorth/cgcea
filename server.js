@@ -2,11 +2,14 @@
 var express = require('express'),
     fs      = require('fs'),
     app     = express(),
+    path = require('path'),
     eps     = require('ejs'),
     morgan  = require('morgan');
 
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
